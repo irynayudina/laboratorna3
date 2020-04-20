@@ -64,6 +64,8 @@ namespace laboratorna3
             Speciality = speciality;
             Form = form;
             LearningYear = learningYear;
+            ArticlesPublished = new List<Article>();
+            NotesMade = new List<Notes>();
             //ArticlesPublished = articlesPublished;
             //NotesMade = notesMade;
         }
