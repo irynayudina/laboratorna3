@@ -8,7 +8,7 @@ namespace laboratorna3
     {
         public string NameOfTheNote { get;  set; }
         public string NameOfTheConference { get; set; }
-        public DateTime Date { get; set; }//DateOfPublishingTheNote
+        public DateTime Date { get; set; }// DateOfPublishingTheNote
         public Notes()
         {
             NameOfTheNote = "Default note";
