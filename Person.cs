@@ -70,14 +70,13 @@ namespace laboratorna3
         {
             return !p1.Equals(p2);
         }
-        public object DeepCopy() {
+        public virtual object DeepCopy() {
             Person p = (Person)this.MemberwiseClone();
             p.Name = String.Copy(Name);
             p.LastName = String.Copy(LastName);
             p.Date = new DateTime(Date.Year, Date.Month, Date.Day);
             return p;
         }
-        //public  DateTime Date { get; set; }
 
     }
 }

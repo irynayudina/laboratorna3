@@ -57,16 +57,32 @@ namespace laboratorna3
             ArticlesPublished = new List<Article>();
             NotesMade = new List<Notes>();
         }
-        public GraduateStudet(string employeePosition, Person supervisor, string speciality, FormOfStudy form, int learningYear, List<Article> articlesPublished, List<Notes> notesMade)
+        public GraduateStudet(string employeePosition, Person supervisor, string speciality, FormOfStudy form, int learningYear)//List<Article> articlesPublished, List<Notes> notesMade
         {
             EmployeePosition = employeePosition;
             DataOfTheSupervisor = supervisor;
             Speciality = speciality;
             Form = form;
             LearningYear = learningYear;
-            ArticlesPublished = articlesPublished;
-            NotesMade = notesMade;
+            //ArticlesPublished = articlesPublished;
+            //NotesMade = notesMade;
         }
-
+        public override string ToString()
+        {
+            return ($"\n Name: {Name}\n Last Name: {LastName}\n" +
+                $" Date of birthday: {Date}\n");
+        }
+        public override object DeepCopy()
+        {
+            GraduateStudet g = (GraduateStudet)this.MemberwiseClone();
+            g.Name = String.Copy(Name);
+            g.LastName = String.Copy(LastName);
+            g.Date = new DateTime(Date.Year, Date.Month, Date.Day);
+            g.EmployeePosition = String.Copy(EmployeePosition);
+            g.DataOfTheSupervisor = (Person)this.DeepCopy();
+            g.Speciality = String.Copy(Speciality);
+            g.LastName = String.Copy(LastName);
+            return g;
+        }
     }
 }
