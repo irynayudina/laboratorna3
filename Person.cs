@@ -19,32 +19,32 @@ namespace laboratorna3
             get { return lastName; }
             set { lastName = value; }
         }
-        public DateTime Birthday
+        public DateTime Date
         {
             get { return birthday; }
             set { birthday = value; }
         }
         public int ChangeBirthday
         {
-            get { return Birthday.Year; }
-            set { Birthday = new DateTime(value, Birthday.Month, Birthday.Day); }
+            get { return Date.Year; }
+            set { Date = new DateTime(value, Date.Month, Date.Day); }
         }
         public Person(string name, string lastName, DateTime birthday)
         {
             Name = name;
             LastName = lastName;
-            Birthday = birthday;
+            Date = birthday;
         }
         public Person()
         {
             Name = "Iryna";
             LastName = "Yudina";
-            Birthday = new DateTime(2001, 01, 27);
+            Date = new DateTime(2001, 01, 27);
         }
         override public string ToString()
         {
             return ($"\n Name: {Name}\n Last Name: {LastName}\n" +
-                $" Date of birthday: {Birthday}\n");
+                $" Date of birthday: {Date}\n");
         }
         public virtual string ToShortString()
         {
@@ -74,10 +74,10 @@ namespace laboratorna3
             Person p = (Person)this.MemberwiseClone();
             p.Name = String.Copy(Name);
             p.LastName = String.Copy(LastName);
-            p.Birthday = new DateTime(Birthday.Year, Birthday.Month, Birthday.Day);
+            p.Date = new DateTime(Date.Year, Date.Month, Date.Day);
             return p;
         }
-        public  DateTime Date { get; set; }
+        //public  DateTime Date { get; set; }
 
     }
 }
