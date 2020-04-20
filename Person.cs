@@ -62,8 +62,20 @@ namespace laboratorna3
         {
             return this.ToString().GetHashCode();
         }
+        public static bool operator == (Person p1, Person p2)
+        {
+            return p1.Equals(p2);
+        }
+        public static bool operator !=(Person p1, Person p2)
+        {
+            return !p1.Equals(p2);
+        }
         public object DeepCopy() {
-            return 0;
+            Person p = (Person)this.MemberwiseClone();
+            p.Name = String.Copy(Name);
+            p.LastName = String.Copy(LastName);
+            p.Birthday = new DateTime(Birthday.Year, Birthday.Month, Birthday.Day);
+            return p;
         }
         public  DateTime Date { get; set; }
 
