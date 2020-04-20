@@ -23,7 +23,7 @@ namespace laboratorna3
         }
         public override string ToString()
         {
-            return ($"\n Name: {Name}\n" +
+            return ($"\n Name of the article: {Name}\n" +
                 $" Date of publishing: {Date}\n" +
                 $" Place of publishing: {Place}");
         }
