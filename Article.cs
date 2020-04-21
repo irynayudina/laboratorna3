@@ -4,7 +4,7 @@ using System.Text;
 
 namespace laboratorna3
 {
-    class Article: IDateAndCopy
+    class Article: Object // IDateAndCopy
     {
         public string Name { get; set; }
         public string Place { get; set; }
@@ -27,7 +27,7 @@ namespace laboratorna3
                 $" Date of publishing: {Date}\n" +
                 $" Place of publishing: {Place}");
         }
-        public virtual object DeepCopy()
+        public virtual Article DeepCopy()
         {
             Article a = (Article)this.MemberwiseClone();
             a.Name = String.Copy(Name);

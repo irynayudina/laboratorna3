@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace laboratorna3
 {
@@ -12,7 +13,7 @@ namespace laboratorna3
         private FormOfStudy form;
         private int learningYear;
         private List<Article> articlesPublished;
-        private List<Notes> notesMade;
+        private List<Notes> notesMade;      
         public string EmployeePosition { 
             get { return employeePosition; }
             set { employeePosition = value; }
@@ -47,6 +48,30 @@ namespace laboratorna3
             get { return notesMade; }
             set { notesMade = value; }
         }
+        public void AddArticles(params Article[] p)
+        {
+            
+            for (int i = ArticlesPublished.Count; i < p.Length; i++)
+            {
+                ArticlesPublished.Add(p[i]);
+            }
+        }
+        public Article LastArticle
+        {
+            get
+            {
+                if(ArticlesPublished.Count == 0)
+                {
+                    return null;
+                }
+                //////////////////WARNING/////////////////
+                ///List<Article> ar = ArticlesPublished.OrderBy(a => a.Date);
+                ///return ar[ArticlesPublished.Count-1];
+
+                ArticlesPublished.OrderBy(a => a.Date);
+                return ArticlesPublished[ArticlesPublished.Count-1];
+            }
+        }
         public GraduateStudet()
         {
             EmployeePosition = "Default employee position";
@@ -69,10 +94,31 @@ namespace laboratorna3
             //ArticlesPublished = articlesPublished;
             //NotesMade = notesMade;
         }
+        //public override string ToString()
+        //{
+        //    return ($"\n Name: {Name}\n Last Name: {LastName}\n" +
+        //        $" Date of birthday: {Date}\n");
+        //}
         public override string ToString()
         {
-            return ($"\n Name: {Name}\n Last Name: {LastName}\n" +
-                $" Date of birthday: {Date}\n");
+            string allInfo = ($"\n Name: {Name}\n Last Name: {LastName}\n" +
+                       $" Date of birthday: {Date}\n Employee position {EmployeePosition}\n Data of the supervisor:\n {DataOfTheSupervisor}\n+" +
+                       $"Form of study {Form}\n learning year {LearningYear}\n List of Articles:\n{ArticlesPublished}\n List of notes:\n{NotesMade}");
+            //foreach(Article a in ArticlesPublished)
+            //{
+            //    allInfo += a.ToString();
+            //}
+            //foreach (Notes n in NotesMade)
+            //{
+            //    allInfo += n.ToString();
+            //}
+            return allInfo;
+        }
+        public override string ToShortString()
+        {
+            return $"\n Name: {Name}\n Last Name: {LastName}\n" +
+                       $" Date of birthday: {Date}\n Employee position {EmployeePosition}\n Data of the supervisor:\n {DataOfTheSupervisor}\n+" +
+                       $"Form of study {Form}\n learning year {LearningYear}\n Number of Articles: {ArticlesPublished.Count}\n Number of notes: {NotesMade.Count}";
         }
         public override object DeepCopy()
         {
@@ -83,7 +129,16 @@ namespace laboratorna3
             g.EmployeePosition = String.Copy(EmployeePosition);
             g.DataOfTheSupervisor = (Person)this.DeepCopy();
             g.Speciality = String.Copy(Speciality);
-            g.LastName = String.Copy(LastName);
+            g.ArticlesPublished = new List<Article>();
+            for (int i = 0; i < ArticlesPublished.Count; i++)
+            {
+                g.ArticlesPublished.Add(this.ArticlesPublished[i].DeepCopy()) ;
+            }
+            g.NotesMade = new List<Notes>();
+            foreach (Notes n in this.NotesMade)
+            {
+                g.NotesMade.Add(n.DeepCopy());
+            }
             return g;
         }
     }
