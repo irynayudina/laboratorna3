@@ -111,11 +111,7 @@ namespace laboratorna3
             //ArticlesPublished = articlesPublished;
             //NotesMade = notesMade;
         }
-        //public override string ToString()
-        //{
-        //    return ($"\n Name: {Name}\n Last Name: {LastName}\n" +
-        //        $" Date of birthday: {Date}\n");
-        //}
+        
         public override string ToString()
         {
             string allInfo = ($"\n  Data of the graduate student:\n Name: {Name}\n Last Name: {LastName}\n" +
@@ -159,5 +155,6 @@ namespace laboratorna3
             }
             return g;
         }
+       notesMade.Union(articlesPublished).ToList();
     }
 }
