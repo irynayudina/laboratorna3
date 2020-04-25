@@ -36,11 +36,28 @@ namespace laboratorna3
         public int LearningYear
         {
             get { return learningYear; }
-            set { learningYear = value; }
+            set {
+                try
+                {
+                    if (value < 0 || value > 4)
+                    {
+                        throw new ArgumentException("Learning year cannot be greater  than 4 or less than 0");
+
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                learningYear = value; }
         }
         public List<Article> ArticlesPublished
         {
-            get { return articlesPublished; }
+            get 
+            {
+                
+                return articlesPublished; 
+            }
             set { articlesPublished = value; }
         }
         public List<Notes> NotesMade
@@ -101,23 +118,24 @@ namespace laboratorna3
         //}
         public override string ToString()
         {
-            string allInfo = ($"\n Name: {Name}\n Last Name: {LastName}\n" +
-                       $" Date of birthday: {Date}\n Employee position {EmployeePosition}\n Data of the supervisor:\n {DataOfTheSupervisor}\n+" +
-                       $"Form of study {Form}\n learning year {LearningYear}\n List of Articles:\n{ArticlesPublished}\n List of notes:\n{NotesMade}");
-            //foreach(Article a in ArticlesPublished)
-            //{
-            //    allInfo += a.ToString();
-            //}
-            //foreach (Notes n in NotesMade)
-            //{
-            //    allInfo += n.ToString();
-            //}
+            string allInfo = ($"\n  Data of the graduate student:\n Name: {Name}\n Last Name: {LastName}\n" +
+                       $" Date of birthday: {Date}\n Employee position {EmployeePosition}\n Data of the supervisor: {DataOfTheSupervisor}" +
+                       $"Form of study {Form}\n learning year {LearningYear}\n List of Articles:\n");
+            foreach (Article a in ArticlesPublished)
+            {
+                allInfo += a.ToString();
+            }
+            allInfo += $"\n List of notes:\n";
+            foreach (Notes n in NotesMade)
+            {
+                allInfo += n.ToString();
+            }
             return allInfo;
         }
         public override string ToShortString()
         {
             return $"\n Name: {Name}\n Last Name: {LastName}\n" +
-                       $" Date of birthday: {Date}\n Employee position {EmployeePosition}\n Data of the supervisor:\n {DataOfTheSupervisor}\n+" +
+                       $" Date of birthday: {Date}\n Employee position {EmployeePosition}\n Data of the supervisor: {DataOfTheSupervisor}\n" +
                        $"Form of study {Form}\n learning year {LearningYear}\n Number of Articles: {ArticlesPublished.Count}\n Number of notes: {NotesMade.Count}";
         }
         public override object DeepCopy()

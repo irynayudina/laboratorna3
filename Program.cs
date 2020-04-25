@@ -24,6 +24,8 @@ namespace laboratorna3
             Console.WriteLine(p2);
             p2.Name = "Another Page";
             Console.WriteLine(p1);
+            GraduateStudet graduate = new GraduateStudet();
+            Console.WriteLine(graduate);
         }
     }
 }
