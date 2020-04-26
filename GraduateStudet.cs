@@ -128,7 +128,7 @@ namespace laboratorna3
             DataOfTheSupervisor = new Person();
             Speciality = "Default speciality";
             Form = 0;
-            LearningYear =1;
+            LearningYear = 4;
             ArticlesPublished = new List<Article>();
             NotesMade = new List<Notes>();
         }
