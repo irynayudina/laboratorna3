@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Xml.Schema;
 
 namespace laboratorna3
 {
@@ -13,7 +14,39 @@ namespace laboratorna3
         private FormOfStudy form;
         private int learningYear;
         private List<Article> articlesPublished;
-        private List<Notes> notesMade;      
+        private List<Notes> notesMade;
+
+        //Ошибка CS1929 'List<Article>" не содержит определение для "Concat", и наиболее подходящий перегруженный метод расширения "ParallelEnumerable.Concat<Notes>(ParallelQuery<Notes>, IEnumerable<Notes>)" требует наличия получателя типа "ParallelQuery<Notes>". laboratorna3 D:\source\repos\homeworkCs\2Semester\laboratorna3\GraduateStudet.cs 18 Активные
+        //public IEnumerable<object> union(){ return articlesPublished.Union(notesMade);}
+
+
+        public IEnumerable<object> unionOfArticlesAndNotes()
+        {
+            for (int i = 0; i < articlesPublished.Count + notesMade.Count; i++)
+            {
+                if (i < articlesPublished.Count)
+                {
+                    yield return articlesPublished[i];
+                }
+                yield return notesMade[i];
+            }
+        }
+        public IEnumerable<object> recentArticles(int n)
+        {
+            //while ()
+            //{
+
+            //}
+            for (int i = 0; i < articlesPublished.Count + notesMade.Count; i++)
+            {
+                if (i < articlesPublished.Count)
+                {
+                    yield return articlesPublished[i];
+                }
+                yield return notesMade[i];
+            }
+        }
+
         public string EmployeePosition { 
             get { return employeePosition; }
             set { employeePosition = value; }
@@ -95,7 +128,7 @@ namespace laboratorna3
             DataOfTheSupervisor = new Person();
             Speciality = "Default speciality";
             Form = 0;
-            LearningYear = DateTime.Today.Year;
+            LearningYear =1;
             ArticlesPublished = new List<Article>();
             NotesMade = new List<Notes>();
         }
@@ -155,6 +188,6 @@ namespace laboratorna3
             }
             return g;
         }
-       notesMade.Union(articlesPublished).ToList();
+        
     }
 }

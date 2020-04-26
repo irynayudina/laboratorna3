@@ -26,6 +26,15 @@ namespace laboratorna3
             Console.WriteLine(p1);
             GraduateStudet graduate = new GraduateStudet();
             Console.WriteLine(graduate);
+            Article[] a = new Article[60];
+            int y = DateTime.Today.Year - graduate.LearningYear + 1;
+            for (int i = 0; i< a.Length; i++)
+            {
+                a[i] = new Article($"article{i+1}", $"place{i+1}", new DateTime((DateTime.Today.Year - graduate.LearningYear + 1), 1, 1).AddDays(4*i));
+                //DateTime.Today.AddDays(4 * i)
+            }
+            graduate.AddArticles(a);
+            Console.WriteLine(graduate);
         }
     }
 }
