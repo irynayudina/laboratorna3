@@ -72,9 +72,9 @@ namespace laboratorna3
         }
         public virtual object DeepCopy() {
             Person p = (Person)this.MemberwiseClone();
-            p.Name = String.Copy(Name);
-            p.LastName = String.Copy(LastName);
-            p.Date = new DateTime(Date.Year, Date.Month, Date.Day);//birthday
+            p.Name = new string(Name);//String.Copy(Name);
+            p.LastName = new string(LastName); //String.Copy(LastName);
+            //p.Date = new DateTime(Date.Year, Date.Month, Date.Day);//birthday
             return p;
         }
 

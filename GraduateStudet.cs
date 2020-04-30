@@ -20,7 +20,7 @@ namespace laboratorna3
         //public IEnumerable<object> union(){ return articlesPublished.Union(notesMade);}
 
 
-        public IEnumerable<object> unionOfArticlesAndNotes()
+        public IEnumerable<object> UnionOfArticlesAndNotes()
         {
             for (int i = 0; i < articlesPublished.Count + notesMade.Count; i++)
             {
@@ -31,19 +31,19 @@ namespace laboratorna3
                 yield return notesMade[i];
             }
         }
-        public IEnumerable<object> recentArticles(int n)
+        public IEnumerable<object> RecentArticles(int n)
         {
-            //while ()
-            //{
-
-            //}
-            for (int i = 0; i < articlesPublished.Count + notesMade.Count; i++)
+            
+            for ( int i = 0; i< ArticlesPublished.Count; i++)
             {
-                if (i < articlesPublished.Count)
+                //if (ArticlesPublished[i].Date.Year > (ArticlesPublished[i].Date.Year - n ))
+                //{
+                //    yield return articlesPublished[i];
+                //} если статья написана за последние н лет от сегодняшней даты включительно:
+                if ( (ArticlesPublished[i].Date).Subtract(new DateTime((DateTime.Today.Year - n), (DateTime.Today).Month, (DateTime.Today).Day)).Days >= 0)
                 {
                     yield return articlesPublished[i];
                 }
-                yield return notesMade[i];
             }
         }
 
@@ -53,8 +53,8 @@ namespace laboratorna3
         }
         public Person DataOfTheSupervisor
         {
-            get { return dataOfTheSupervisor; }
-            set { dataOfTheSupervisor = value; }
+            get { return dataOfTheSupervisor; }//new person (from graduate this.property this. property)
+            set { dataOfTheSupervisor = value; }//person value.name value.date
         }
         public string Speciality
         {
@@ -114,12 +114,12 @@ namespace laboratorna3
                 {
                     return null;
                 }
-                //////////////////WARNING/////////////////
-                ///List<Article> ar = ArticlesPublished.OrderBy(a => a.Date);
-                ///return ar[ArticlesPublished.Count-1];
+                ////////////////WARNING/////////////////
+                //List < Article > ar = ArticlesPublished.OrderBy(a => a.Date);
+                //return ar[ArticlesPublished.Count - 1];
 
-                ArticlesPublished.OrderBy(a => a.Date);
-                return ArticlesPublished[ArticlesPublished.Count-1];
+                Article[] art = ArticlesPublished.OrderBy(a => a.Date).ToArray();
+                return art[ArticlesPublished.Count - 1];
             }
         }
         public GraduateStudet()
@@ -170,21 +170,21 @@ namespace laboratorna3
         public override object DeepCopy()
         {
             GraduateStudet g = (GraduateStudet)this.MemberwiseClone();
-            g.Name = String.Copy(Name);
-            g.LastName = String.Copy(LastName);
-            g.Date = new DateTime(Date.Year, Date.Month, Date.Day);
-            g.EmployeePosition = String.Copy(EmployeePosition);
+            g.Name = new string(Name); //String.Copy(Name); is obsolete
+            g.LastName = new string(LastName); //String.Copy(LastName);
+            //g.Date = //new DateTime(Date.Year, Date.Month, Date.Day);//struct value type unnecessary new
+            g.EmployeePosition = new string(EmployeePosition); //String.Copy(EmployeePosition);// new + assign values
             g.DataOfTheSupervisor = (Person)this.DeepCopy();
-            g.Speciality = String.Copy(Speciality);
+            g.Speciality = new string(Speciality); //String.Copy(Speciality);
             g.ArticlesPublished = new List<Article>();
             for (int i = 0; i < ArticlesPublished.Count; i++)
             {
-                g.ArticlesPublished.Add(this.ArticlesPublished[i].DeepCopy()) ;
+                g.ArticlesPublished.Add((Article)this.ArticlesPublished[i].DeepCopy()) ;
             }
             g.NotesMade = new List<Notes>();
             foreach (Notes n in this.NotesMade)
             {
-                g.NotesMade.Add(n.DeepCopy());
+                g.NotesMade.Add((Notes)n.DeepCopy());
             }
             return g;
         }

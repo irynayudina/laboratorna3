@@ -13,36 +13,42 @@ namespace laboratorna3
     }
     class Program
     {
-        static void Main(string[] args)
+        static void Main()//string[] args
         {
-            Console.WriteLine("Hello World!");
-            Notes note = new Notes();
-            Console.WriteLine(note);
-            Person p1 = new Person();
-            Person p2 = p1;
-            Person p3 = new Person();
-            Console.WriteLine(p2.Equals(p1));
-            Console.WriteLine(p3.Equals(p1));
-            p1.Name = "Same Page";
-            Console.WriteLine(p2);
-            p2.Name = "Another Page";
-            Console.WriteLine(p1);
+           
+            Person person1 = new Person();
+            Person person2 = new Person();
+            Console.WriteLine("Person2 and Person1 are the same instance: " + ReferenceEquals(person2, person1));
+            Console.WriteLine("Person2 equals Person1: " + person2.Equals(person1));
+            Console.WriteLine($"Person1 hash code: {person1.GetHashCode()}");
+            Console.WriteLine($"Person2 hash code: {person2.GetHashCode()}");
             GraduateStudet graduate = new GraduateStudet();
-            Console.WriteLine(graduate);
             Random rand = new Random();
-            //int y = rand.Next((DateTime.Today.Year - graduate.LearningYear + 1), DateTime.Today.Year);
-            Article[] a = new Article[60];
-            //int y = DateTime.Today.Year - graduate.LearningYear + 1;
+            Article[] a = new Article[60];            
             for (int i = 0; i< a.Length; i++)
             {
                 int y = rand.Next((DateTime.Today.Year - graduate.LearningYear + 1), DateTime.Today.Year);
-                a[i] = new Article($"article{i + 1}", $"place{i + 1}", new DateTime(y, 1, 1).AddDays(4 * i));
-                //a[i] = new Article($"article{i+1}", $"place{i+1}", new DateTime((DateTime.Today.Year - graduate.LearningYear + 1), 1, 1).AddDays(4*i));
-                //DateTime.Today.AddDays(4 * i)
+                int m = rand.Next(1, 12);
+                int d = rand.Next(1, 28);
+                a[i] = new Article($"article{i + 1}", $"place{i + 1}", new DateTime(y, m, d));
             }
-            //Array.Reverse(a, 0, 10);
             graduate.AddArticles(a);
+            Notes[] n = new Notes[30];
+            for (int i = 0; i < n.Length; i++)
+            {
+                int y = rand.Next((DateTime.Today.Year - graduate.LearningYear + 1), DateTime.Today.Year);
+                int m = rand.Next(1, 12);
+                int d = rand.Next(1, 28);
+                a[i] = new Article($"note{i + 1}", $"conference{i + 1}", new DateTime(y, m, d));
+            }
+           // graduate.AddNotes(n);
             Console.WriteLine(graduate);
+            Console.WriteLine(graduate.LastArticle);
+            string t = "ttttttttttttt";
+            string r = new string(t);
+
+            t = "rrrrrrrrrr";
+            Console.WriteLine(ReferenceEquals(t, r) + r) ;
         }
     }
 }

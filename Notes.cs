@@ -4,7 +4,7 @@ using System.Text;
 
 namespace laboratorna3
 {
-    class Notes //IDateAndCopy
+    class Notes: IDateAndCopy
     {
         public string NameOfTheNote { get;  set; }
         public string NameOfTheConference { get; set; }
@@ -25,11 +25,11 @@ namespace laboratorna3
         {
             return $"Name of the note: {NameOfTheNote}\nName of the conference: {NameOfTheConference}\nDate of publishing the note {Date}";
         }
-        public virtual Notes DeepCopy()
+        public virtual object DeepCopy()
         {
             Notes n = (Notes)this.MemberwiseClone();
-            n.NameOfTheNote = String.Copy(NameOfTheNote);
-            n.NameOfTheConference = String.Copy(NameOfTheConference);
+            n.NameOfTheNote = new string(NameOfTheNote); //String.Copy(NameOfTheNote);
+            n.NameOfTheConference = new string(NameOfTheConference); //String.Copy(NameOfTheConference);
             n.Date = new DateTime(Date.Year, Date.Month, Date.Day);
             return n;
         }
