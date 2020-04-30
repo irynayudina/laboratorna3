@@ -9,7 +9,10 @@ namespace laboratorna3
     class GraduateStudet: Person, IDateAndCopy
     {
         private string employeePosition;
-        private Person dataOfTheSupervisor;
+      //  private Person dataOfTheSupervisor = new Person("","", new DateTime(200, 01, 01));
+        // Предупреждение CS0649  Полю "GraduateStudet.dataOfTheSupervisor" нигде не присваивается значение, 
+        //поэтому оно всегда будет иметь значение по умолчанию null
+        // private Person dataOfTheSupervisor;
         private string speciality;
         private FormOfStudy form;
         private int learningYear;
@@ -51,11 +54,19 @@ namespace laboratorna3
             get { return employeePosition; }
             set { employeePosition = value; }
         }
-        public Person DataOfTheSupervisor
+        public Person PersonProprety
         {
-            get { return dataOfTheSupervisor; }//new person (from graduate this.property this. property)
-            set { dataOfTheSupervisor = value; }//person value.name value.date
+            get { return new Person(this.Name, this.LastName, this.Date) ; }
+            set { this.Name = value.Name;// System.NullReferenceException: "Oject reference not set to an instance of an object" data of the supervisor was null
+                  this.LastName = value.LastName;
+                  this.Date = value.Date;
+            }
         }
+        
+          public Person Supervisor
+        {  get;  set;
+        }
+
         public string Speciality
         {
             get { return speciality; }
@@ -106,6 +117,13 @@ namespace laboratorna3
                 ArticlesPublished.Add(p[i]);
             }
         }
+        public void AddNotes(params Notes[] p)
+        {
+            for (int i = NotesMade.Count; i < p.Length; i++)
+            {
+                NotesMade.Add(p[i]);
+            }
+        }
         public Article LastArticle
         {
             get
@@ -114,9 +132,6 @@ namespace laboratorna3
                 {
                     return null;
                 }
-                ////////////////WARNING/////////////////
-                //List < Article > ar = ArticlesPublished.OrderBy(a => a.Date);
-                //return ar[ArticlesPublished.Count - 1];
 
                 Article[] art = ArticlesPublished.OrderBy(a => a.Date).ToArray();
                 return art[ArticlesPublished.Count - 1];
@@ -125,17 +140,18 @@ namespace laboratorna3
         public GraduateStudet()
         {
             EmployeePosition = "Default employee position";
-            DataOfTheSupervisor = new Person();
+            Supervisor = new Person();
             Speciality = "Default speciality";
             Form = 0;
             LearningYear = 4;
             ArticlesPublished = new List<Article>();
             NotesMade = new List<Notes>();
         }
-        public GraduateStudet(string employeePosition, Person supervisor, string speciality, FormOfStudy form, int learningYear)//List<Article> articlesPublished, List<Notes> notesMade
+        public GraduateStudet(string employeePosition, Person supervisor, string speciality, FormOfStudy form, int learningYear) 
+            : base(supervisor.Name, supervisor.LastName, supervisor.Date)//List<Article> articlesPublished, List<Notes> notesMade
         {
             EmployeePosition = employeePosition;
-            DataOfTheSupervisor = supervisor;
+            Supervisor = supervisor;
             Speciality = speciality;
             Form = form;
             LearningYear = learningYear;
@@ -148,7 +164,7 @@ namespace laboratorna3
         public override string ToString()
         {
             string allInfo = ($"\n  Data of the graduate student:\n Name: {Name}\n Last Name: {LastName}\n" +
-                       $" Date of birthday: {Date}\n Employee position {EmployeePosition}\n Data of the supervisor: {DataOfTheSupervisor}" +
+                       $" Date of birthday: {Date}\n Employee position {EmployeePosition}\n Data of the supervisor: {Supervisor}" +
                        $"Form of study {Form}\n learning year {LearningYear}\n List of Articles:\n");
             foreach (Article a in ArticlesPublished)
             {
@@ -164,7 +180,7 @@ namespace laboratorna3
         public override string ToShortString()
         {
             return $"\n Name: {Name}\n Last Name: {LastName}\n" +
-                       $" Date of birthday: {Date}\n Employee position {EmployeePosition}\n Data of the supervisor: {DataOfTheSupervisor}\n" +
+                       $" Date of birthday: {Date}\n Employee position {EmployeePosition}\n Data of the supervisor: {Supervisor}\n" +
                        $"Form of study {Form}\n learning year {LearningYear}\n Number of Articles: {ArticlesPublished.Count}\n Number of notes: {NotesMade.Count}";
         }
         public override object DeepCopy()
@@ -174,7 +190,7 @@ namespace laboratorna3
             g.LastName = new string(LastName); //String.Copy(LastName);
             //g.Date = //new DateTime(Date.Year, Date.Month, Date.Day);//struct value type unnecessary new
             g.EmployeePosition = new string(EmployeePosition); //String.Copy(EmployeePosition);// new + assign values
-            g.DataOfTheSupervisor = (Person)this.DeepCopy();
+            g.Supervisor = (Person)this.DeepCopy();
             g.Speciality = new string(Speciality); //String.Copy(Speciality);
             g.ArticlesPublished = new List<Article>();
             for (int i = 0; i < ArticlesPublished.Count; i++)

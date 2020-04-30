@@ -46,6 +46,8 @@ namespace laboratorna3
             Console.WriteLine(graduate.LastArticle);
             string t = "ttttttttttttt";
             string r = new string(t);
+            graduate.Supervisor = new Person("i", "y", new DateTime(20, 10, 10));
+            Console.WriteLine(graduate.Name);
 
             t = "rrrrrrrrrr";
             Console.WriteLine(ReferenceEquals(t, r) + r) ;
