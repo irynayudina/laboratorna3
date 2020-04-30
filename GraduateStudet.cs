@@ -1,72 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using System.Xml.Schema;
 
 namespace laboratorna3
 {
     class GraduateStudet: Person, IDateAndCopy
     {
         private string employeePosition;
-      //  private Person dataOfTheSupervisor = new Person("","", new DateTime(200, 01, 01));
-        // Предупреждение CS0649  Полю "GraduateStudet.dataOfTheSupervisor" нигде не присваивается значение, 
-        //поэтому оно всегда будет иметь значение по умолчанию null
-        // private Person dataOfTheSupervisor;
         private string speciality;
         private FormOfStudy form;
         private int learningYear;
         private List<Article> articlesPublished;
         private List<Notes> notesMade;
-
-        //Ошибка CS1929 'List<Article>" не содержит определение для "Concat", и наиболее подходящий перегруженный метод расширения "ParallelEnumerable.Concat<Notes>(ParallelQuery<Notes>, IEnumerable<Notes>)" требует наличия получателя типа "ParallelQuery<Notes>". laboratorna3 D:\source\repos\homeworkCs\2Semester\laboratorna3\GraduateStudet.cs 18 Активные
-        //public IEnumerable<object> union(){ return articlesPublished.Union(notesMade);}
-
-
-        public IEnumerable<object> UnionOfArticlesAndNotes()
+        public Person Supervisor { get; set; }
+        public Person PersonProperty
         {
-            for (int i = 0; i < articlesPublished.Count + notesMade.Count; i++)
+            get { return new Person(this.Name, this.LastName, this.Date); }
+            set
             {
-                if (i < articlesPublished.Count)
-                {
-                    yield return articlesPublished[i];
-                }
-                yield return notesMade[i];
+                this.Name = value.Name;// System.NullReferenceException: "Oject reference not set to an instance of an object" data of the supervisor was null
+                this.LastName = value.LastName;
+                this.Date = value.Date;
             }
         }
-        public IEnumerable<object> RecentArticles(int n)
-        {
-            
-            for ( int i = 0; i< ArticlesPublished.Count; i++)
-            {
-                //if (ArticlesPublished[i].Date.Year > (ArticlesPublished[i].Date.Year - n ))
-                //{
-                //    yield return articlesPublished[i];
-                //} если статья написана за последние н лет от сегодняшней даты включительно:
-                if ( (ArticlesPublished[i].Date).Subtract(new DateTime((DateTime.Today.Year - n), (DateTime.Today).Month, (DateTime.Today).Day)).Days >= 0)
-                {
-                    yield return articlesPublished[i];
-                }
-            }
-        }
-
+        //Could be automatic properties<!-----
         public string EmployeePosition { 
             get { return employeePosition; }
             set { employeePosition = value; }
         }
-        public Person PersonProprety
-        {
-            get { return new Person(this.Name, this.LastName, this.Date) ; }
-            set { this.Name = value.Name;// System.NullReferenceException: "Oject reference not set to an instance of an object" data of the supervisor was null
-                  this.LastName = value.LastName;
-                  this.Date = value.Date;
-            }
-        }
-        
-          public Person Supervisor
-        {  get;  set;
-        }
-
         public string Speciality
         {
             get { return speciality; }
@@ -77,10 +38,22 @@ namespace laboratorna3
             get { return form; }
             set { form = value; }
         }
+        public List<Article> ArticlesPublished
+        {
+            get { return articlesPublished; }
+            set { articlesPublished = value; }
+        }
+        public List<Notes> NotesMade
+        {
+            get { return notesMade; }
+            set { notesMade = value; }
+        }
+        // ------------->
         public int LearningYear
         {
             get { return learningYear; }
-            set {
+            set
+            {
                 try
                 {
                     if (value < 0 || value > 4)
@@ -93,21 +66,45 @@ namespace laboratorna3
                 {
                     Console.WriteLine(ex.Message);
                 }
-                learningYear = value; }
-        }
-        public List<Article> ArticlesPublished
-        {
-            get 
-            {
-                
-                return articlesPublished; 
+                learningYear = value;
             }
-            set { articlesPublished = value; }
         }
-        public List<Notes> NotesMade
+        public IEnumerable<object> UnionOfArticlesAndNotes()
         {
-            get { return notesMade; }
-            set { notesMade = value; }
+            for (int i = 0; i < articlesPublished.Count * 2 + notesMade.Count; i++)
+            {
+                if (i < articlesPublished.Count)
+                {
+                    yield return articlesPublished[i];
+                }
+                else if ((i - articlesPublished.Count) < notesMade.Count)
+                {
+                    yield return notesMade[i - articlesPublished.Count];
+                }
+            }
+            //for (int i = 0; i < articlesPublished.Count; i++)
+            //{                
+            //        yield return articlesPublished[i];                
+            //}
+            //for (int i = 0; i < notesMade.Count; i++)
+            //{
+            //    yield return notesMade[i];
+            //}
+        }
+        public IEnumerable<object> RecentArticles(int n)
+        {
+
+            for (int i = 0; i < ArticlesPublished.Count; i++)
+            {
+                //if (ArticlesPublished[i].Date.Year > (ArticlesPublished[i].Date.Year - n ))
+                //{
+                //    yield return articlesPublished[i];
+                //} если статья написана за последние н лет от сегодняшней даты включительно:
+                if ((ArticlesPublished[i].Date).Subtract(new DateTime((DateTime.Today.Year - n), (DateTime.Today).Month, (DateTime.Today).Day)).Days >= 0)
+                {
+                    yield return articlesPublished[i];
+                }
+            }
         }
         public void AddArticles(params Article[] p)
         {
@@ -147,11 +144,11 @@ namespace laboratorna3
             ArticlesPublished = new List<Article>();
             NotesMade = new List<Notes>();
         }
-        public GraduateStudet(string employeePosition, Person supervisor, string speciality, FormOfStudy form, int learningYear) 
-            : base(supervisor.Name, supervisor.LastName, supervisor.Date)//List<Article> articlesPublished, List<Notes> notesMade
+        public GraduateStudet(Person p, Person sup, string employeePosition, string speciality, FormOfStudy form, int learningYear) 
+            : base(p.Name, p.LastName, p.Date)//List<Article> articlesPublished, List<Notes> notesMade
         {
             EmployeePosition = employeePosition;
-            Supervisor = supervisor;
+            Supervisor = sup;
             Speciality = speciality;
             Form = form;
             LearningYear = learningYear;
@@ -170,7 +167,7 @@ namespace laboratorna3
             {
                 allInfo += a.ToString();
             }
-            allInfo += $"\n List of notes:\n";
+            allInfo += $"Last Article: {LastArticle}\n List of notes:\n";//added output of last article
             foreach (Notes n in NotesMade)
             {
                 allInfo += n.ToString();
@@ -186,11 +183,9 @@ namespace laboratorna3
         public override object DeepCopy()
         {
             GraduateStudet g = (GraduateStudet)this.MemberwiseClone();
-            g.Name = new string(Name); //String.Copy(Name); is obsolete
-            g.LastName = new string(LastName); //String.Copy(LastName);
-            //g.Date = //new DateTime(Date.Year, Date.Month, Date.Day);//struct value type unnecessary new
+            g.PersonProperty = (Person)this.PersonProperty.DeepCopy();
             g.EmployeePosition = new string(EmployeePosition); //String.Copy(EmployeePosition);// new + assign values
-            g.Supervisor = (Person)this.DeepCopy();
+            g.Supervisor = (Person)this.Supervisor.DeepCopy();
             g.Speciality = new string(Speciality); //String.Copy(Speciality);
             g.ArticlesPublished = new List<Article>();
             for (int i = 0; i < ArticlesPublished.Count; i++)
