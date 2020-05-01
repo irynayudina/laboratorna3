@@ -74,7 +74,6 @@ namespace laboratorna3
             Person p = (Person)this.MemberwiseClone();
             p.Name = new string(Name);//String.Copy(Name);
             p.LastName = new string(LastName); //String.Copy(LastName);
-            //p.Date = new DateTime(Date.Year, Date.Month, Date.Day);//birthday
             return p;
         }
 

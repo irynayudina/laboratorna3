@@ -71,25 +71,25 @@ namespace laboratorna3
         }
         public IEnumerable<object> UnionOfArticlesAndNotes()
         {
-            for (int i = 0; i < articlesPublished.Count * 2 + notesMade.Count; i++)
-            {
-                if (i < articlesPublished.Count)
-                {
-                    yield return articlesPublished[i];
-                }
-                else if ((i - articlesPublished.Count) < notesMade.Count)
-                {
-                    yield return notesMade[i - articlesPublished.Count];
-                }
-            }
-            //for (int i = 0; i < articlesPublished.Count; i++)
-            //{                
-            //        yield return articlesPublished[i];                
-            //}
-            //for (int i = 0; i < notesMade.Count; i++)
+            //for (int i = 0; i < articlesPublished.Count * 2 + notesMade.Count; i++)
             //{
-            //    yield return notesMade[i];
+            //    if (i < articlesPublished.Count)
+            //    {
+            //        yield return articlesPublished[i];
+            //    }
+            //    else if ((i - articlesPublished.Count) < notesMade.Count)
+            //    {
+            //        yield return notesMade[i - articlesPublished.Count];
+            //    }
             //}
+            for (int i = 0; i < articlesPublished.Count; i++)
+            {
+                yield return articlesPublished[i];
+            }
+            for (int i = 0; i < notesMade.Count; i++)
+            {
+                yield return notesMade[i];
+            }
         }
         public IEnumerable<object> RecentArticles(int n)
         {
