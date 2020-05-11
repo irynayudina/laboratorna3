@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -54,22 +55,17 @@ namespace laboratorna3
             get { return learningYear; }
             set
             {
-                try
-                {
-                    if (value < 0 || value > 4)
-                    {
-                        throw new ArgumentException("Learning year cannot be greater  than 4 or less than 0");
 
-                    }
-                }
-                catch (ArgumentException ex)
+                if (value < 0 || value > 4)
                 {
-                    Console.WriteLine(ex.Message);
+                    throw new ArgumentException("Learning year cannot be greater  than 4 or less than 0");
+
                 }
-                learningYear = value;
+
+                else { learningYear = value; }
             }
         }
-        public IEnumerable<object> UnionOfArticlesAndNotes()
+        public IEnumerable UnionOfArticlesAndNotes()
         {
             //for (int i = 0; i < articlesPublished.Count * 2 + notesMade.Count; i++)
             //{
@@ -91,7 +87,7 @@ namespace laboratorna3
                 yield return notesMade[i];
             }
         }
-        public IEnumerable<object> RecentArticles(int n)
+        public IEnumerable RecentArticles(int n)
         {
 
             for (int i = 0; i < ArticlesPublished.Count; i++)
@@ -184,7 +180,7 @@ namespace laboratorna3
         {
             GraduateStudet g = (GraduateStudet)this.MemberwiseClone();
             g.PersonProperty = (Person)this.PersonProperty.DeepCopy();
-            g.EmployeePosition = new string(EmployeePosition); //String.Copy(EmployeePosition);// new + assign values
+            g.EmployeePosition = new string(EmployeePosition); //String.Copy(EmployeePosition);
             g.Supervisor = (Person)this.Supervisor.DeepCopy();
             g.Speciality = new string(Speciality); //String.Copy(Speciality);
             g.ArticlesPublished = new List<Article>();

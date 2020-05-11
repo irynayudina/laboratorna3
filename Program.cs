@@ -47,13 +47,22 @@ namespace laboratorna3
             Console.WriteLine(graduate.PersonProperty);
             GraduateStudet graduate1 = (GraduateStudet)graduate.DeepCopy();
             graduate.PersonProperty = new Person("Lidia", graduate.LastName, graduate.Date);
-            graduate.ArticlesPublished[0].Name = "Name of this article has been changed";
+            graduate.ArticlesPublished[0].Name = "**********************Name of this article has been changed******************";
             Console.WriteLine("\n\n\n\n\n\n Deep copy of the graduate student: \n\n\n\n\n\n");
             Console.WriteLine(graduate1);
             Console.WriteLine("\n\n\n\n\n\n Original graduate student: \n\n\n\n\n\n");
             Console.WriteLine(graduate);
             Console.WriteLine("\n\n\n\n\n\n Attempt to assign incorrect value to learning year \n");
-            graduate.LearningYear = 5;
+            try
+            {
+                graduate.LearningYear = 5;
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
+
             Console.WriteLine("\n\n\n\n\n\n Union of articles: \n\n\n\n\n\n");
             foreach (var v in graduate.UnionOfArticlesAndNotes())
             {
