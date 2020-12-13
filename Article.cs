@@ -4,8 +4,10 @@ using System.Text;
 
 namespace laboratorna3
 {
+    [Serializable]
     class Article:  IDateAndCopy
     {
+
         public string Name { get; set; }
         public string Place { get; set; }
         public DateTime Date { get; set; }
@@ -25,7 +27,7 @@ namespace laboratorna3
         {
             return ($"\n Name of the article: {Name}\n" +
                 $" Date of publishing: {Date}\n" +
-                $" Place of publishing: {Place}");
+                $" Place of publishing: {Place}\n");
         }
         public virtual object DeepCopy()
         {

@@ -4,6 +4,7 @@ using System.Text;
 
 namespace laboratorna3
 {
+    [Serializable]
     class Person: IDateAndCopy
     {
         protected string name;

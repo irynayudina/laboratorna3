@@ -4,6 +4,7 @@ using System.Text;
 
 namespace laboratorna3
 {
+    [Serializable]
     class Notes: IDateAndCopy
     {
         public string NameOfTheNote { get;  set; }
